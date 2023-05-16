@@ -2,9 +2,10 @@ package top.daozhang;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mybatisflex.core.MybatisFlexBootstrap;
-import com.mybatisflex.core.query.QueryColumn;
 import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.core.row.Db;
+import com.mybatisflex.core.row.Row;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -14,6 +15,8 @@ import top.daozhang.mapper.UserMapper;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static top.daozhang.entity.table.Tables.USER;
 
 @Test
 @Slf4j
@@ -62,7 +65,10 @@ public class TestSimpleCrud {
     public void findOne() {
         UserMapper mapper = ins.getMapper(UserMapper.class);
         var q = new QueryWrapper();
-        q.and(QueryCondition.create(new QueryColumn("nickname"),QueryCondition.LOGIC_EQUALS,"迪丽热巴"));
+        //  直接使用query column的方式写入nickname并不能利用静态类型的特点
+        // 使用APT 生产，字段名自动维护
+        QueryCondition qc = USER.NICKNAME.eq("迪丽热巴");
+        q.and(qc);
         User user = mapper.selectOneByQuery(q);
         log.info(user.toString());
     }
@@ -71,7 +77,7 @@ public class TestSimpleCrud {
     public void updateOne() {
         UserMapper mapper = ins.getMapper(UserMapper.class);
         var q = new QueryWrapper();
-        q.and(QueryCondition.create(new QueryColumn("nickname"),QueryCondition.LOGIC_EQUALS,"迪丽热巴"));
+        q.and(USER.NICKNAME.eq("迪丽热巴"));
         User user = mapper.selectOneByQuery(q);
         user.setBirthday(LocalDate.of(1998,12,3));
         mapper.update(user);
@@ -80,10 +86,15 @@ public class TestSimpleCrud {
     @Test
     public void deleteOne() {
         UserMapper mapper = ins.getMapper(UserMapper.class);
-        QueryCondition queryCondition = QueryCondition.create(new QueryColumn("nickname"), QueryCondition.LOGIC_EQUALS, "迪丽热巴");
-        mapper.deleteByCondition(queryCondition);
+        mapper.deleteByCondition(USER.NICKNAME.eq("迪丽热巴"));
     }
 
 
 
+
+    public void dbRow(){
+        String sql = "select * from t_user where id > ?";
+        List<Row> rows = Db.selectListBySql(sql, 1);
+        rows.forEach(a->log.info(a.toString()));
+    }
 }
