@@ -23,7 +23,5 @@ public class SimpleCrud {
 
         UserMapper mapper = ins.getMapper(UserMapper.class);
 
-
-        
     }
 }

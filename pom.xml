@@ -55,5 +55,11 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 代码生成器，如果不爱apt方式 ，可以用这个代替 -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-codegen</artifactId>
+            <version>1.2.3</version>
+        </dependency>
     </dependencies>
 </project>

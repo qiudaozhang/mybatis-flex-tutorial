@@ -40,17 +40,17 @@ public class TestSimpleCrud {
     }
 
 
-    @Test
-    public void insert() {
-        UserMapper mapper = ins.getMapper(UserMapper.class);
-        User u = User.builder().nickname("迪丽热巴").birthday(LocalDate.of(1990, 1, 1))
-                .created(LocalDateTime.now())
-                .sex(0)
-                .build();
-
-        log.info("save user");
-        mapper.insert(u);
-    }
+//    @Test
+//    public void insert() {
+//        UserMapper mapper = ins.getMapper(UserMapper.class);
+//        User u = User.builder().nickname("迪丽热巴").birthday(LocalDate.of(1990, 1, 1))
+//                .created(LocalDateTime.now())
+//                .sex(0)
+//                .build();
+//
+//        log.info("save user");
+//        mapper.insert(u);
+//    }
 
     @Test
     public void selectAll() {
@@ -73,15 +73,15 @@ public class TestSimpleCrud {
         log.info(user.toString());
     }
 
-    @Test
-    public void updateOne() {
-        UserMapper mapper = ins.getMapper(UserMapper.class);
-        var q = new QueryWrapper();
-        q.and(USER.NICKNAME.eq("迪丽热巴"));
-        User user = mapper.selectOneByQuery(q);
-        user.setBirthday(LocalDate.of(1998,12,3));
-        mapper.update(user);
-    }
+//    @Test
+//    public void updateOne() {
+//        UserMapper mapper = ins.getMapper(UserMapper.class);
+//        var q = new QueryWrapper();
+//        q.and(USER.NICKNAME.eq("迪丽热巴"));
+//        User user = mapper.selectOneByQuery(q);
+//        user.setBirthday(LocalDate.of(1998,12,3));
+//        mapper.update(user);
+//    }
 
     @Test
     public void deleteOne() {

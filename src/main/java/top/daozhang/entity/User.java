@@ -3,28 +3,48 @@ package top.daozhang.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
+import java.io.Serializable;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-@Table(value = "t_user")
+/**
+ * 用户表
+ */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
+@Table(value = "t_user")
 public class User implements Serializable {
 
+    /**
+     * 主键
+     */
     @Id(keyType = KeyType.Auto)
     private Long id;
+
+    /**
+     * 昵称
+     */
     private String nickname;
-    private LocalDate birthday;
+
+    /**
+     * 生日
+     */
+    private Date birthday;
+
+    /**
+     * 创建时间
+     */
     private LocalDateTime created;
-    private Integer sex=0;
+
+    /**
+     * 性别
+     */
+    private Integer sex;
+
 }
