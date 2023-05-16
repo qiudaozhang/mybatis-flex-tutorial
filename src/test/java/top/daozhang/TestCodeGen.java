@@ -40,12 +40,13 @@ public class TestCodeGen {
     public void run(){
 
         GlobalConfig globalConfig = new GlobalConfig();
-        globalConfig.addGenerateTable("t_user");// 需要生成的表
+        globalConfig.addGenerateTable("t_user","t_order");// 需要生成的表
         globalConfig.setEntityPackage("top.daozhang.entity");// 实体包
         globalConfig.setTablePrefix("t_");// 表的前缀风格
         globalConfig.setEntityWithLombok(true);// 是否使用lombok
         globalConfig.setMapperPackage("top.daozhang.mapper");//mapper所在包
         globalConfig.setMapperGenerateEnable(true);// 如果开启了 ，  apt记得关闭
+        globalConfig.setMapperOverwriteEnable(false);// 不允许覆盖
         JdbcTypeMapping.registerMapping(LocalDate.class, Date.class); // 将Date替换为LocalDate，
         Generator generator = new Generator(ins.getDataSource(),globalConfig);
         generator.generate();
